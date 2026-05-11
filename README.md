@@ -50,6 +50,10 @@ desafio-hyperativa/
 │       └── Program.cs
 ├── tests/
 │   └── DesafioHyperativa.UnitTests/      # Testes unitários
+├── postman/
+│   ├── Desafio-Hyperativa.postman_collection.json
+│   ├── Desafio-Hyperativa.postman_environment.json
+│   └── cartoes-exemplo.txt
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
@@ -136,24 +140,97 @@ O Swagger UI estará em `http://localhost:5000`.
 
 ---
 
-## Como Subir com Docker
+## Como Subir com Docker / Podman
+
+### Pré-requisitos
+
+- [Docker](https://docs.docker.com/get-docker/) + [Docker Compose v2](https://docs.docker.com/compose/install/) **ou** [Podman](https://podman.io/getting-started/installation) + [podman-compose](https://github.com/containers/podman-compose)
+
+> **Nota para usuários Podman:** o `docker-compose.yml` é compatível com ambos. Os comandos abaixo mostram as duas variantes.
+
+### 1. Construir e subir o ambiente
 
 ```bash
-# Construir e subir todos os serviços
-docker compose up --build
-
-# Em background
+# Docker
 docker compose up --build -d
 
-# Parar
-docker compose down
-
-# Parar e remover volumes
-docker compose down -v
+# Podman
+podman-compose up -d --build
 ```
 
-A API ficará disponível em `http://localhost:8080`.  
-O Swagger UI estará em `http://localhost:8080`.
+O que sobe:
+
+- **`hyperativa-db`** — PostgreSQL 16 na porta `5432`
+- **`hyperativa-api`** — API .NET 8 na porta `8080`
+
+As migrations do banco e o seed do usuário `admin` são aplicados **automaticamente** na inicialização. A API tenta conectar ao banco por até 30 segundos (10 tentativas com intervalo de 3s) antes de falhar.
+
+### 2. Verificar se os containers estão em execução
+
+```bash
+# Docker
+docker compose ps
+
+# Podman
+podman ps
+```
+
+Esperando ver ambos com status **`Up`**:
+
+```
+hyperativa-db   Up (healthy)
+hyperativa-api  Up
+```
+
+### 3. Verificar os logs
+
+```bash
+# Acompanhar logs em tempo real
+docker compose logs -f api
+
+# Podman
+podman logs -f hyperativa-api
+```
+
+Quando a API estiver pronta, você verá:
+
+```
+[INF] Usuário admin criado com sucesso.
+[INF] Now listening on: http://[::]:8080
+```
+
+### 4. Confirmar que a API está respondendo
+
+```bash
+curl http://localhost:8080/health
+# Esperado: Healthy
+```
+
+### 5. Acessar a documentação
+
+- **Swagger UI:** `http://localhost:8080`
+- **Health Check:** `http://localhost:8080/health`
+
+### Parar e remover o ambiente
+
+```bash
+# Parar (mantém volumes de dados)
+docker compose down
+podman-compose down
+
+# Parar e remover todos os volumes (apaga dados do banco)
+docker compose down -v
+podman-compose down -v
+```
+
+### Troubleshooting
+
+| Sintoma                                        | Causa provável                                | Solução                                                      |
+| ---------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| `hyperativa-api` em `Exited` logo após subir   | API não conseguiu conectar ao banco           | Verifique os logs: `podman logs hyperativa-api`              |
+| `Name or service not known` nos logs           | DNS entre containers não resolvendo           | Certifique-se de que o plugin `dnsname` do CNI está ativo    |
+| `address already in use` na porta 8080 ou 5432 | Outra instância usando a porta                | Encerre o processo ou altere a porta no `docker-compose.yml` |
+| `sockets not supported` no build (Podman)      | Aviso cosmético do Podman ao commitar camadas | Pode ser ignorado; o build continua normalmente              |
 
 ---
 
