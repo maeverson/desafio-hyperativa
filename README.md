@@ -50,6 +50,10 @@ desafio-hyperativa/
 │       └── Program.cs
 ├── tests/
 │   └── DesafioHyperativa.UnitTests/      # Testes unitários
+├── postman/
+│   ├── Desafio-Hyperativa.postman_collection.json
+│   ├── Desafio-Hyperativa.postman_environment.json
+│   └── cartoes-exemplo.txt
 ├── Dockerfile
 ├── docker-compose.yml
 └── README.md
@@ -136,24 +140,97 @@ O Swagger UI estará em `http://localhost:5000`.
 
 ---
 
-## Como Subir com Docker
+## Como Subir com Docker / Podman
+
+### Pré-requisitos
+
+- [Docker](https://docs.docker.com/get-docker/) + [Docker Compose v2](https://docs.docker.com/compose/install/) **ou** [Podman](https://podman.io/getting-started/installation) + [podman-compose](https://github.com/containers/podman-compose)
+
+> **Nota para usuários Podman:** o `docker-compose.yml` é compatível com ambos. Os comandos abaixo mostram as duas variantes.
+
+### 1. Construir e subir o ambiente
 
 ```bash
-# Construir e subir todos os serviços
-docker compose up --build
-
-# Em background
+# Docker
 docker compose up --build -d
 
-# Parar
-docker compose down
-
-# Parar e remover volumes
-docker compose down -v
+# Podman
+podman-compose up -d --build
 ```
 
-A API ficará disponível em `http://localhost:8080`.  
-O Swagger UI estará em `http://localhost:8080`.
+O que sobe:
+
+- **`hyperativa-db`** — PostgreSQL 16 na porta `5432`
+- **`hyperativa-api`** — API .NET 8 na porta `8080`
+
+As migrations do banco e o seed do usuário `admin` são aplicados **automaticamente** na inicialização. A API tenta conectar ao banco por até 30 segundos (10 tentativas com intervalo de 3s) antes de falhar.
+
+### 2. Verificar se os containers estão em execução
+
+```bash
+# Docker
+docker compose ps
+
+# Podman
+podman ps
+```
+
+Esperando ver ambos com status **`Up`**:
+
+```
+hyperativa-db   Up (healthy)
+hyperativa-api  Up
+```
+
+### 3. Verificar os logs
+
+```bash
+# Acompanhar logs em tempo real
+docker compose logs -f api
+
+# Podman
+podman logs -f hyperativa-api
+```
+
+Quando a API estiver pronta, você verá:
+
+```
+[INF] Usuário admin criado com sucesso.
+[INF] Now listening on: http://[::]:8080
+```
+
+### 4. Confirmar que a API está respondendo
+
+```bash
+curl http://localhost:8080/health
+# Esperado: Healthy
+```
+
+### 5. Acessar a documentação
+
+- **Swagger UI:** `http://localhost:8080`
+- **Health Check:** `http://localhost:8080/health`
+
+### Parar e remover o ambiente
+
+```bash
+# Parar (mantém volumes de dados)
+docker compose down
+podman-compose down
+
+# Parar e remover todos os volumes (apaga dados do banco)
+docker compose down -v
+podman-compose down -v
+```
+
+### Troubleshooting
+
+| Sintoma                                        | Causa provável                                | Solução                                                      |
+| ---------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| `hyperativa-api` em `Exited` logo após subir   | API não conseguiu conectar ao banco           | Verifique os logs: `podman logs hyperativa-api`              |
+| `Name or service not known` nos logs           | DNS entre containers não resolvendo           | Certifique-se de que o plugin `dnsname` do CNI está ativo    |
+| `address already in use` na porta 8080 ou 5432 | Outra instância usando a porta                | Encerre o processo ou altere a porta no `docker-compose.yml` |
+| `sockets not supported` no build (Podman)      | Aviso cosmético do Podman ao commitar camadas | Pode ser ignorado; o build continua normalmente              |
 
 ---
 
@@ -311,6 +388,62 @@ curl -X GET http://localhost:8080/api/cards/4111111111111111 \
 ```bash
 curl http://localhost:8080/health
 ```
+
+---
+
+## Testando com Postman
+
+A pasta `postman/` contém uma collection completa com todos os endpoints e scripts de teste automatizados.
+
+```
+postman/
+├── Desafio-Hyperativa.postman_collection.json   # Collection com 16 requests
+├── Desafio-Hyperativa.postman_environment.json  # Environment (baseUrl, token)
+└── cartoes-exemplo.txt                          # Arquivo de exemplo para upload em lote
+```
+
+### 1. Importar no Postman
+
+1. Abra o Postman
+2. Clique em **Import** (canto superior esquerdo)
+3. Selecione os dois arquivos abaixo e importe:
+   - `postman/Desafio-Hyperativa.postman_collection.json`
+   - `postman/Desafio-Hyperativa.postman_environment.json`
+4. No seletor de environments (canto superior direito), escolha **"Desafio Hyperativa - Local"**
+
+### 2. Obter o token JWT automaticamente
+
+Execute a request **Auth → Login - Credenciais válidas**. O script de teste salva o `accessToken` automaticamente na variável de environment — todas as demais requests de `Cards` já o utilizam via `{{accessToken}}`.
+
+### 3. Testar o upload em lote
+
+Na request **Cards → Upload Lote - TXT válido**:
+
+1. Clique no campo `file` em **Body → form-data**
+2. Selecione o arquivo `postman/cartoes-exemplo.txt`
+3. Envie a request
+
+### Requests disponíveis
+
+| Grupo  | Request                           | Descrição                                |
+| ------ | --------------------------------- | ---------------------------------------- |
+| Auth   | Login - Credenciais válidas       | 200 + salva token automaticamente        |
+| Auth   | Login - Senha incorreta           | 401                                      |
+| Auth   | Login - Payload inválido          | 400 + detalhes de validação              |
+| Cards  | Inserir Cartão - Válido (Visa)    | 200 + UUID gerado                        |
+| Cards  | Inserir Cartão - Idempotente      | 200 + mesmo UUID (sem duplicata)         |
+| Cards  | Inserir Cartão - Mastercard       | 200                                      |
+| Cards  | Inserir Cartão - Com espaços      | 200 (normalização automática)            |
+| Cards  | Inserir Cartão - Muito curto      | 400                                      |
+| Cards  | Inserir Cartão - Com letras       | 400                                      |
+| Cards  | Inserir Cartão - Sem autenticação | 401                                      |
+| Cards  | Consultar Cartão - Existe         | `exists: true` + UUID                    |
+| Cards  | Consultar Cartão - Não existe     | `exists: false`, `cardId: null`          |
+| Cards  | Consultar Cartão - Com traços     | `exists: true` (normalização automática) |
+| Cards  | Upload Lote - TXT válido          | 200 + processed / invalid / generatedIds |
+| Cards  | Upload Lote - Arquivo não .txt    | 400                                      |
+| Cards  | Upload Lote - Sem arquivo         | 400                                      |
+| Health | Health Check                      | 200 `Healthy`                            |
 
 ---
 

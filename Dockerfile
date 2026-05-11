@@ -10,14 +10,14 @@ COPY src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.cspro
 COPY src/DesafioHyperativa.API/DesafioHyperativa.API.csproj src/DesafioHyperativa.API/
 COPY tests/DesafioHyperativa.UnitTests/DesafioHyperativa.UnitTests.csproj tests/DesafioHyperativa.UnitTests/
 
-RUN dotnet restore
+RUN dotnet restore && \
+    find /tmp -maxdepth 1 \( -name 'MSBuild*' -o -name 'dotnet-diagnostic-*' \) -delete 2>/dev/null || true
 
 # Copiar código-fonte e publicar
 COPY . .
 RUN dotnet publish src/DesafioHyperativa.API/DesafioHyperativa.API.csproj \
     -c Release \
-    -o /app/publish \
-    --no-restore
+    -o /app/publish
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime

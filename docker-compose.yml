@@ -10,7 +10,7 @@ services:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=hyperativa_db;Username=hyperativa;Password=hyperativa@123
+      - ConnectionStrings__DefaultConnection=Host=hyperativa-db;Port=5432;Database=hyperativa_db;Username=hyperativa;Password=hyperativa@123
       - JwtSettings__SecretKey=HyperativaSecretKey!2024#ChangeInProduction$32chars
       - JwtSettings__Issuer=DesafioHyperativa
       - JwtSettings__Audience=DesafioHyperativaClients
@@ -18,8 +18,7 @@ services:
       - Encryption__Key=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
       - Encryption__IV=AAAAAAAAAAAAAAAAAAA=
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     volumes:
       - api-logs:/app/logs
     networks:
@@ -33,8 +32,9 @@ services:
       start_period: 40s
 
   db:
-    image: postgres:16-alpine
+    image: docker.io/library/postgres:16-alpine
     container_name: hyperativa-db
+    hostname: db
     environment:
       - POSTGRES_DB=hyperativa_db
       - POSTGRES_USER=hyperativa
