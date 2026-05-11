@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DesafioHyperativa.API</name>
+    </assembly>
+    <members>
+        <member name="M:DesafioHyperativa.API.Controllers.AuthController.Login(DesafioHyperativa.Application.DTOs.Requests.LoginRequest,System.Threading.CancellationToken)">
+            <summary>
+            Realiza autenticação e retorna um JWT Bearer Token.
+            </summary>
+            <param name="request">Credenciais do usuário.</param>
+            <param name="cancellationToken">Token de cancelamento.</param>
+        </member>
+        <member name="M:DesafioHyperativa.API.Controllers.CardsController.AddCard(DesafioHyperativa.Application.DTOs.Requests.AddCardRequest,System.Threading.CancellationToken)">
+            <summary>
+            Insere um novo número de cartão de forma unitária.
+            </summary>
+        </member>
+        <member name="M:DesafioHyperativa.API.Controllers.CardsController.UploadCards(Microsoft.AspNetCore.Http.IFormFile,System.Threading.CancellationToken)">
+            <summary>
+            Faz upload de arquivo TXT com um número de cartão por linha.
+            </summary>
+        </member>
+        <member name="M:DesafioHyperativa.API.Controllers.CardsController.CheckCard(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Consulta se um número de cartão existe na base.
+            </summary>
+            <param name="cardNumber">Número do cartão a consultar.</param>
+        </member>
+    </members>
+</doc>

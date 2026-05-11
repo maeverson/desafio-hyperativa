@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E2CB6545-5128-49EA-A2F1-D1B69E118229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.Domain", "src\DesafioHyperativa.Domain\DesafioHyperativa.Domain.csproj", "{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.Shared", "src\DesafioHyperativa.Shared\DesafioHyperativa.Shared.csproj", "{D2A5D1E8-2DFD-4580-BB04-16245F17D95A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.Application", "src\DesafioHyperativa.Application\DesafioHyperativa.Application.csproj", "{602C14B6-76B0-485A-BD4D-A4315A8ACBDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.Infrastructure", "src\DesafioHyperativa.Infrastructure\DesafioHyperativa.Infrastructure.csproj", "{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.API", "src\DesafioHyperativa.API\DesafioHyperativa.API.csproj", "{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{CCDD73F3-B342-4238-BFAE-9480EB205672}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioHyperativa.UnitTests", "tests\DesafioHyperativa.UnitTests\DesafioHyperativa.UnitTests.csproj", "{C330CEA9-4802-4D41-A209-BC6431FCDEEE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A5D1E8-2DFD-4580-BB04-16245F17D95A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A5D1E8-2DFD-4580-BB04-16245F17D95A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A5D1E8-2DFD-4580-BB04-16245F17D95A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A5D1E8-2DFD-4580-BB04-16245F17D95A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602C14B6-76B0-485A-BD4D-A4315A8ACBDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602C14B6-76B0-485A-BD4D-A4315A8ACBDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602C14B6-76B0-485A-BD4D-A4315A8ACBDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602C14B6-76B0-485A-BD4D-A4315A8ACBDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C330CEA9-4802-4D41-A209-BC6431FCDEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C330CEA9-4802-4D41-A209-BC6431FCDEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C330CEA9-4802-4D41-A209-BC6431FCDEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C330CEA9-4802-4D41-A209-BC6431FCDEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5B0BB87B-3F34-4D6D-9D64-B6C7369848BA} = {E2CB6545-5128-49EA-A2F1-D1B69E118229}
+		{D2A5D1E8-2DFD-4580-BB04-16245F17D95A} = {E2CB6545-5128-49EA-A2F1-D1B69E118229}
+		{602C14B6-76B0-485A-BD4D-A4315A8ACBDD} = {E2CB6545-5128-49EA-A2F1-D1B69E118229}
+		{61705D0C-E7F3-4AA3-A37F-3BBA1AD6A8D6} = {E2CB6545-5128-49EA-A2F1-D1B69E118229}
+		{53EEB0DB-B920-4494-87D3-7B4FDF88F0BE} = {E2CB6545-5128-49EA-A2F1-D1B69E118229}
+		{C330CEA9-4802-4D41-A209-BC6431FCDEEE} = {CCDD73F3-B342-4238-BFAE-9480EB205672}
+	EndGlobalSection
+EndGlobal

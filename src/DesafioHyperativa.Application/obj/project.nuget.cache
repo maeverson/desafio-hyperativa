@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "JRR7D7wV2+U=",
+  "success": true,
+  "projectFilePath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj",
+  "expectedPackageFiles": [
+    "/home/maeversonwaitman/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
+    "/home/maeversonwaitman/.nuget/packages/fluentvalidation/11.9.0/fluentvalidation.11.9.0.nupkg.sha512",
+    "/home/maeversonwaitman/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.9.0/fluentvalidation.dependencyinjectionextensions.11.9.0.nupkg.sha512",
+    "/home/maeversonwaitman/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/2.1.0/microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

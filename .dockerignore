@@ -1,0 +1,9 @@
+.env
+logs/
+*.user
+.vs/
+bin/
+obj/
+*.db
+*.db-shm
+*.db-wal

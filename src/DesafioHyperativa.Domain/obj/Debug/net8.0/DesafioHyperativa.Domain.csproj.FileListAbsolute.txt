@@ -1,0 +1,11 @@
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/bin/Debug/net8.0/DesafioHyperativa.Domain.deps.json
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/bin/Debug/net8.0/DesafioHyperativa.Domain.dll
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/bin/Debug/net8.0/DesafioHyperativa.Domain.pdb
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.AssemblyInfoInputs.cache
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.AssemblyInfo.cs
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.csproj.CoreCompileInputs.cache
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.dll
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/refint/DesafioHyperativa.Domain.dll
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/DesafioHyperativa.Domain.pdb
+/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/Debug/net8.0/ref/DesafioHyperativa.Domain.dll

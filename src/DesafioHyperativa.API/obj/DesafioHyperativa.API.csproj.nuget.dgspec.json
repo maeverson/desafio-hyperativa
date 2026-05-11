@@ -1,0 +1,433 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.API/DesafioHyperativa.API.csproj": {}
+  },
+  "projects": {
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.API/DesafioHyperativa.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.API/DesafioHyperativa.API.csproj",
+        "projectName": "DesafioHyperativa.API",
+        "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.API/DesafioHyperativa.API.csproj",
+        "packagesPath": "/home/maeversonwaitman/.nuget/packages/",
+        "outputPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.API/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/maeversonwaitman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj"
+              },
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.csproj"
+              },
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "AspNetCore.HealthChecks.NpgSql": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "AspNetCoreRateLimit": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.26, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Serilog.AspNetCore": {
+              "target": "Package",
+              "version": "[8.0.3, )"
+            },
+            "Serilog.Enrichers.Environment": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Serilog.Enrichers.Thread": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Serilog.Sinks.File": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.9.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj",
+        "projectName": "DesafioHyperativa.Application",
+        "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj",
+        "packagesPath": "/home/maeversonwaitman/.nuget/packages/",
+        "outputPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/maeversonwaitman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj"
+              },
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.9.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.9.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj",
+        "projectName": "DesafioHyperativa.Domain",
+        "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj",
+        "packagesPath": "/home/maeversonwaitman/.nuget/packages/",
+        "outputPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/maeversonwaitman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.csproj",
+        "projectName": "DesafioHyperativa.Infrastructure",
+        "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/DesafioHyperativa.Infrastructure.csproj",
+        "packagesPath": "/home/maeversonwaitman/.nuget/packages/",
+        "outputPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Infrastructure/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/maeversonwaitman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Application/DesafioHyperativa.Application.csproj"
+              },
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Domain/DesafioHyperativa.Domain.csproj"
+              },
+              "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj": {
+                "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[7.6.2, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "StackExchange.Redis": {
+              "target": "Package",
+              "version": "[2.8.16, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[7.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj",
+        "projectName": "DesafioHyperativa.Shared",
+        "projectPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/DesafioHyperativa.Shared.csproj",
+        "packagesPath": "/home/maeversonwaitman/.nuget/packages/",
+        "outputPath": "/home/maeversonwaitman/AMBIENTE/repositórios/Java/desafio-hyperativa/src/DesafioHyperativa.Shared/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/maeversonwaitman/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.420/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

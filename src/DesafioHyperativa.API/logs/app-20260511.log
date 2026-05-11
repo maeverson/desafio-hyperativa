@@ -1,0 +1,2 @@
+2026-05-11 10:33:59.976 -03:00 [WRN] The property 'User.Roles' is a collection or enumeration type with a value converter but with no value comparer. Set a value comparer to ensure the collection/enumeration elements are compared correctly.
+2026-05-11 10:34:00.321 -03:00 [WRN] The property 'User.Roles' is a collection or enumeration type with a value converter but with no value comparer. Set a value comparer to ensure the collection/enumeration elements are compared correctly.

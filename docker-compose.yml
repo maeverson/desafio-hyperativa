@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hyperativa-api
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=hyperativa_db;Username=hyperativa;Password=hyperativa@123
+      - JwtSettings__SecretKey=HyperativaSecretKey!2024#ChangeInProduction$32chars
+      - JwtSettings__Issuer=DesafioHyperativa
+      - JwtSettings__Audience=DesafioHyperativaClients
+      - JwtSettings__ExpiresInMinutes=60
+      - Encryption__Key=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+      - Encryption__IV=AAAAAAAAAAAAAAAAAAA=
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - api-logs:/app/logs
+    networks:
+      - hyperativa-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+  db:
+    image: postgres:16-alpine
+    container_name: hyperativa-db
+    environment:
+      - POSTGRES_DB=hyperativa_db
+      - POSTGRES_USER=hyperativa
+      - POSTGRES_PASSWORD=hyperativa@123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - hyperativa-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hyperativa -d hyperativa_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  postgres-data:
+    driver: local
+  api-logs:
+    driver: local
+
+networks:
+  hyperativa-net:
+    driver: bridge
