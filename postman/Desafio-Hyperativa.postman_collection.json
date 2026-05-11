@@ -1,0 +1,779 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Desafio Hyperativa API",
+    "description": "Collection completa para teste da API de gerenciamento de cartões do Desafio Hyperativa.\n\n**Como usar:**\n1. Importe esta collection e o environment `Desafio-Hyperativa.postman_environment.json`\n2. Execute a request **Login** — o token JWT é salvo automaticamente na variável `accessToken`\n3. Todas as demais requests já utilizam o token automaticamente via variável de environment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Endpoints de autenticação",
+      "item": [
+        {
+          "name": "Login - Credenciais válidas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Retorna accessToken', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('accessToken');",
+                  "    pm.expect(json.accessToken).to.be.a('string').and.not.empty;",
+                  "    pm.collectionVariables.set('accessToken', json.accessToken);",
+                  "});",
+                  "",
+                  "pm.test('tokenType é Bearer', function () {",
+                  "    pm.expect(pm.response.json().tokenType).to.eql('Bearer');",
+                  "});",
+                  "",
+                  "pm.test('expiresIn é um número positivo', function () {",
+                  "    pm.expect(pm.response.json().expiresIn).to.be.above(0);",
+                  "});",
+                  "",
+                  "pm.test('Retorna refreshToken', function () {",
+                  "    pm.expect(pm.response.json().refreshToken).to.be.a('string').and.not.empty;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"Admin@123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Autentica o usuário e salva o JWT na variável `accessToken` da collection automaticamente via script de teste."
+          },
+          "response": [
+            {
+              "name": "200 OK - Token gerado",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "application/json"}],
+              "body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n    \"tokenType\": \"Bearer\",\n    \"expiresIn\": 3600,\n    \"refreshToken\": \"base64string...\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login - Senha incorreta",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 401 Unauthorized', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});",
+                  "",
+                  "pm.test('Mensagem de erro presente', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('message');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"senhaerrada\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Deve retornar 401 quando as credenciais são inválidas."
+          },
+          "response": []
+        },
+        {
+          "name": "Login - Payload inválido (sem senha)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Retorna detalhes de validação', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('details');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"admin\",\n    \"password\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Deve retornar 400 quando o payload não passa na validação do FluentValidation."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cards",
+      "description": "Endpoints de gerenciamento de cartões. Requerem JWT Bearer Token.",
+      "item": [
+        {
+          "name": "Inserir Cartão - Válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Retorna cardId (UUID)', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json).to.have.property('cardId');",
+                  "    pm.expect(json.cardId).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "    pm.collectionVariables.set('lastCardId', json.cardId);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"4111111111111111\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Insere um número de cartão Visa de teste (4111111111111111) válido pelo algoritmo de Luhn."
+          },
+          "response": [
+            {
+              "name": "200 OK - Cartão inserido",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "application/json"}],
+              "body": "{\n    \"cardId\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Inserir Cartão - Idempotente (duplicado)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK (idempotente)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Retorna o mesmo cardId da inserção anterior', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.cardId).to.eql(pm.collectionVariables.get('lastCardId'));",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"4111111111111111\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Envia o mesmo cartão novamente — deve retornar 200 com o mesmo ID (comportamento idempotente)."
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Cartão - Mastercard",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Retorna cardId', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('cardId');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"5500005555555559\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Insere um número de cartão Mastercard de teste."
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Cartão - Com espaços (normalizado)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Aceita cartão com espaços', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('cardId');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"4111 1111 1111 1111\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Cartão com espaços — deve ser normalizado e tratado como idempotente ao cartão anterior 4111111111111111."
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Cartão - Inválido (muito curto)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Retorna mensagem de validação', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('details');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Cartão com menos de 13 dígitos — deve retornar 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Cartão - Inválido (letras)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"ABCDEFGHIJKLMNO\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Cartão com letras — deve retornar 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Cartão - Sem autenticação",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 401 Unauthorized', function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cardNumber\": \"4111111111111111\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards"]
+            },
+            "description": "Deve retornar 401 sem o token JWT."
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar Cartão - Existe",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('exists é true', function () {",
+                  "    pm.expect(pm.response.json().exists).to.be.true;",
+                  "});",
+                  "",
+                  "pm.test('Retorna cardId (UUID)', function () {",
+                  "    var json = pm.response.json();",
+                  "    pm.expect(json.cardId).to.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/4111111111111111",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "4111111111111111"]
+            },
+            "description": "Consulta o cartão 4111111111111111 inserido anteriormente. Deve retornar `exists: true` e o `cardId`."
+          },
+          "response": [
+            {
+              "name": "200 OK - Cartão encontrado",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "application/json"}],
+              "body": "{\n    \"exists\": true,\n    \"cardId\": \"550e8400-e29b-41d4-a716-446655440000\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Consultar Cartão - Não existe",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('exists é false', function () {",
+                  "    pm.expect(pm.response.json().exists).to.be.false;",
+                  "});",
+                  "",
+                  "pm.test('cardId é null', function () {",
+                  "    pm.expect(pm.response.json().cardId).to.be.null;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/9999999999999999",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "9999999999999999"]
+            },
+            "description": "Consulta um cartão que não existe na base. Deve retornar `exists: false` e `cardId: null`."
+          },
+          "response": [
+            {
+              "name": "200 OK - Cartão não encontrado",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "application/json"}],
+              "body": "{\n    \"exists\": false,\n    \"cardId\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Consultar Cartão - Com traços (normalizado)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('exists é true (mesmo cartão normalizado)', function () {",
+                  "    pm.expect(pm.response.json().exists).to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/4111-1111-1111-1111",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "4111-1111-1111-1111"]
+            },
+            "description": "Consulta com traços — a API normaliza e encontra o cartão inserido anteriormente."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Lote - TXT válido",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Retorna totalLines', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('totalLines');",
+                  "});",
+                  "",
+                  "pm.test('Retorna processed', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('processed');",
+                  "});",
+                  "",
+                  "pm.test('Retorna invalid', function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('invalid');",
+                  "});",
+                  "",
+                  "pm.test('Retorna generatedIds como array', function () {",
+                  "    pm.expect(pm.response.json().generatedIds).to.be.an('array');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Selecione um arquivo .txt com um número de cartão por linha. Ex:\n4532015112830366\n5425233430109903\n374251018720955"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "upload"]
+            },
+            "description": "Faz upload de um arquivo TXT com cartões (um por linha). Crie um arquivo local com o conteúdo:\n```\n4532015112830366\n5425233430109903\n374251018720955\n```\nE selecione no campo `file`."
+          },
+          "response": [
+            {
+              "name": "200 OK - Resultado do upload",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "application/json"}],
+              "body": "{\n    \"totalLines\": 3,\n    \"processed\": 3,\n    \"invalid\": 0,\n    \"generatedIds\": [\n        \"550e8400-e29b-41d4-a716-446655440001\",\n        \"550e8400-e29b-41d4-a716-446655440002\",\n        \"550e8400-e29b-41d4-a716-446655440003\"\n    ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Upload Lote - Arquivo não .txt",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test('Mensagem de erro sobre extensão', function () {",
+                  "    pm.expect(pm.response.json().message).to.include('txt');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": [],
+                  "description": "Selecione qualquer arquivo que não seja .txt (ex: .csv, .json)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "upload"]
+            },
+            "description": "Deve rejeitar arquivos que não sejam .txt com status 400."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Lote - Sem arquivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 400 Bad Request', function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/cards/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "cards", "upload"]
+            },
+            "description": "Deve retornar 400 quando nenhum arquivo é enviado."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "description": "Endpoint de health check",
+      "item": [
+        {
+          "name": "Health Check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Resposta é Healthy', function () {",
+                  "    pm.expect(pm.response.text()).to.include('Healthy');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Verifica a saúde da API e da conexão com o PostgreSQL."
+          },
+          "response": [
+            {
+              "name": "200 OK - Healthy",
+              "status": "OK",
+              "code": 200,
+              "header": [{"key": "Content-Type", "value": "text/plain"}],
+              "body": "Healthy"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

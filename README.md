@@ -314,6 +314,62 @@ curl http://localhost:8080/health
 
 ---
 
+## Testando com Postman
+
+A pasta `postman/` contém uma collection completa com todos os endpoints e scripts de teste automatizados.
+
+```
+postman/
+├── Desafio-Hyperativa.postman_collection.json   # Collection com 16 requests
+├── Desafio-Hyperativa.postman_environment.json  # Environment (baseUrl, token)
+└── cartoes-exemplo.txt                          # Arquivo de exemplo para upload em lote
+```
+
+### 1. Importar no Postman
+
+1. Abra o Postman
+2. Clique em **Import** (canto superior esquerdo)
+3. Selecione os dois arquivos abaixo e importe:
+   - `postman/Desafio-Hyperativa.postman_collection.json`
+   - `postman/Desafio-Hyperativa.postman_environment.json`
+4. No seletor de environments (canto superior direito), escolha **"Desafio Hyperativa - Local"**
+
+### 2. Obter o token JWT automaticamente
+
+Execute a request **Auth → Login - Credenciais válidas**. O script de teste salva o `accessToken` automaticamente na variável de environment — todas as demais requests de `Cards` já o utilizam via `{{accessToken}}`.
+
+### 3. Testar o upload em lote
+
+Na request **Cards → Upload Lote - TXT válido**:
+
+1. Clique no campo `file` em **Body → form-data**
+2. Selecione o arquivo `postman/cartoes-exemplo.txt`
+3. Envie a request
+
+### Requests disponíveis
+
+| Grupo  | Request                           | Descrição                                |
+| ------ | --------------------------------- | ---------------------------------------- |
+| Auth   | Login - Credenciais válidas       | 200 + salva token automaticamente        |
+| Auth   | Login - Senha incorreta           | 401                                      |
+| Auth   | Login - Payload inválido          | 400 + detalhes de validação              |
+| Cards  | Inserir Cartão - Válido (Visa)    | 200 + UUID gerado                        |
+| Cards  | Inserir Cartão - Idempotente      | 200 + mesmo UUID (sem duplicata)         |
+| Cards  | Inserir Cartão - Mastercard       | 200                                      |
+| Cards  | Inserir Cartão - Com espaços      | 200 (normalização automática)            |
+| Cards  | Inserir Cartão - Muito curto      | 400                                      |
+| Cards  | Inserir Cartão - Com letras       | 400                                      |
+| Cards  | Inserir Cartão - Sem autenticação | 401                                      |
+| Cards  | Consultar Cartão - Existe         | `exists: true` + UUID                    |
+| Cards  | Consultar Cartão - Não existe     | `exists: false`, `cardId: null`          |
+| Cards  | Consultar Cartão - Com traços     | `exists: true` (normalização automática) |
+| Cards  | Upload Lote - TXT válido          | 200 + processed / invalid / generatedIds |
+| Cards  | Upload Lote - Arquivo não .txt    | 400                                      |
+| Cards  | Upload Lote - Sem arquivo         | 400                                      |
+| Health | Health Check                      | 200 `Healthy`                            |
+
+---
+
 ## Como Executar os Testes
 
 ```bash

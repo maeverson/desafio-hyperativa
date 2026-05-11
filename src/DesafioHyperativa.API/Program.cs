@@ -11,11 +11,25 @@ builder.AddApplicationServices();
 
 var app = builder.Build();
 
-// Aplicar migrations automaticamente ao iniciar
+// Aplicar migrations automaticamente ao iniciar (com retry para aguardar o banco)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await db.Database.MigrateAsync();
+    var retries = 10;
+    while (retries-- > 0)
+    {
+        try
+        {
+            await db.Database.MigrateAsync();
+            break;
+        }
+        catch (Exception ex) when (retries > 0)
+        {
+            Log.Warning("Banco de dados não disponível, tentando novamente em 3s... ({Retries} tentativas restantes). {Error}",
+                retries, ex.Message);
+            await Task.Delay(3000);
+        }
+    }
 
     // Seed: Criar usuário admin padrão se não existir
     var userRepo = scope.ServiceProvider.GetRequiredService<DesafioHyperativa.Domain.Interfaces.IUserRepository>();
